@@ -24,7 +24,7 @@ class FSGetter implements ParamsGetter {
                 throw new FSException("Error parsing config file");
             }
         }
-        
+
         return $params;
     }
 

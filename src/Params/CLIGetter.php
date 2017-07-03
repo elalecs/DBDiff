@@ -6,7 +6,7 @@ use Aura\Cli\Status;
 
 
 class CLIGetter implements ParamsGetter {
-    
+
     public function getParams() {
         $params = new \StdClass;
 
@@ -17,13 +17,13 @@ class CLIGetter implements ParamsGetter {
         $getopt = $context->getopt([
             'server1::', 'server2::', 'format::',
             'template::', 'type::', 'include::',
-            'nocomments::', 'config::', 'output::', 'debug::'
+            'nocomments::', 'config:', 'output::', 'debug::'
         ]);
-    
+
         $input = $getopt->get(1);
         if ($input) {
             $params->input = $this->parseInput($input);
-        } else throw new CLIException("Missing input");
+        }
 
         if ($getopt->get('--server1'))
             $params->server1 = $this->parseServer($getopt->get('--server1'));

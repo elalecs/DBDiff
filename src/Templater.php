@@ -18,7 +18,7 @@ class Templater {
         if (is_null($this->params->output)) {
             $tokens = pathinfo($this->params->config);
 
-            $last_file = end(glob(getcwd() . "/migrations/*_" . $tokens['filename'] . ".migration"));
+            $last_file = end(glob(getcwd() . "/migrations/".$tokens['filename']."/*_" . $tokens['filename'] . ".migration"));
             if (!empty($last_file) && is_readable($last_file)) {
                 $last_content = file_get_contents($last_file);
                 $last_content = preg_replace('~\#.*\n~', '', $last_content);
@@ -30,7 +30,7 @@ class Templater {
                 }
             }
 
-            $output_filename = getcwd() . "/migrations/" . date("YmdHis", time()) . "_" . $tokens['filename'] . ".migration";
+            $output_filename = getcwd() . "/migrations/" . $tokens['filename'] . "/" . date("YmdHis", time()) . "_" . $tokens['filename'] . ".migration";
 
             Logger::info("Writing migration file to {$output_filename}");
             file_put_contents($output_filename, $comments . $content);

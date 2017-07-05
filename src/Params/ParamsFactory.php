@@ -26,25 +26,22 @@ class ParamsFactory {
             throw new CLIException("A server is required");
         }
 
-        if (!isset($params->input['kind']) || !in_array($params->input['kind'], ["db", "table"])) {
-            throw new CLIException("Operation type not defined");
+        if (
+            isset($params->input['source']['server'])
+            &&
+            isset($params->input['source']['db'])
+            &&
+            isset($params->input['source']['table'])
+        ) {
+            $params->input['kind'] = "table";
         }
-
-        if (!isset($params->input['source']['server'])) {
-            throw new CLIException("Server source not defined");
-        }
-
-        if (!isset($params->input['target']['server'])) {
-            throw new CLIException("Server target not defined");
-        }
-
-        if (!isset($params->input['source']['db'])) {
-            throw new CLIException("DB source not defined");
-        }
-
-        if (!isset($params->input['target']['db'])) {
-            throw new CLIException("DB target not defined");
-        }
+        elseif (
+            isset($params->input['source']['server'])
+            &&
+            isset($params->input['source']['db'])
+        ) {
+            $params->input['kind'] = "db";
+        } else throw new CLIException("Unkown kind of resources");
 
         return $params;
     }
